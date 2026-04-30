@@ -1,0 +1,26 @@
+schedule:
+  interval_days: 3        # 何日ごとに値下げするか
+  step_yen: 100           # 1回の値下げ幅(円)
+
+pricing:
+  floor_ratio: 0.70       # 元値に対する下限の比率 (0.70 = 70%)
+  mercari_min_price: 300  # メルカリの最低出品価格
+
+notify:
+  enabled: true
+  gmail_user: "you@gmail.com"
+  gmail_app_password: "xxxx xxxx xxxx xxxx"   # https://myaccount.google.com/apppasswords
+  to: "you@gmail.com"
+
+browser:
+  headless: true
+  storage_state_path: "storage_state.json"
+  # Playwright が起動する前後・各操作の間にランダム待機する範囲(秒)
+  action_delay_min: 1.5
+  action_delay_max: 4.0
+  per_item_delay_min: 5.0
+  per_item_delay_max: 15.0
+
+paths:
+  state_db: "state.db"
+  log_dir: "logs"

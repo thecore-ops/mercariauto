@@ -1,0 +1,30 @@
+name: Price-down reminder
+
+on:
+  schedule:
+    # 3日ごとに JST 10:00 = UTC 01:00 に実行
+    # cron は「3日おき」を厳密表現できないので毎日走らせ、曜日でフィルタ。
+    # ここでは「奇数日(1,4,7,...)」の代わりに「3,6,9,...日」相当を walltime で実装するため、
+    # 実用上は素直に「毎日 10:00 JST」で走らせ、Mac側で last_lowered_at をチェックして
+    # 値下げ要否を判定する設計。リマインダーは毎日来るとうるさいので「3日ごと」を
+    # 近似する最短表現として "0 1 */3 * *"(3日ごと、月初リセットの罠あり)を採用。
+    - cron: "0 1 */3 * *"
+  workflow_dispatch: {}
+
+jobs:
+  remind:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Send reminder email
+        env:
+          GMAIL_USER: ${{ secrets.GMAIL_USER }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+          GMAIL_TO: ${{ secrets.GMAIL_TO }}
+        run: python scripts/send_reminder.py

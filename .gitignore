@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.pytest_cache/
+
+# User-specific config & secrets
+config.yaml
+
+# Runtime artifacts
+storage_state.json
+state.db
+state.db-journal
+logs/
+
+# OS
+.DS_Store
+src/mercari_auto.egg-info/
