@@ -35,4 +35,15 @@ def main() -> None:
         "    cd \"/Users/yuki/Desktop/THE CORE AIデータ/メルカリ価格調整自動化\"\n"
         "    source .venv/bin/activate\n"
         "    python -m mercari_auto.main\n\n"
-        "実行後、結果のサマリーメールが届き
+        "実行後、結果のサマリーメールが届きます。\n"
+    )
+
+    ctx = ssl.create_default_context()
+    with smtplib.SMTP_SSL("smtp.gmail.com", 465, context=ctx) as smtp:
+        smtp.login(user, pw)
+        smtp.send_message(msg)
+    print(f"Reminder sent to {to}")
+
+
+if __name__ == "__main__":
+    main()
